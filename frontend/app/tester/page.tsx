@@ -2,16 +2,24 @@
 
 import { useState } from "react";
 
+type Signal = {
+  type: string;
+  confidence: number;
+  message: string;
+};
+
 export default function TesterPage() {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [decision, setDecision] = useState<"ALLOW" | "BLOCK" | null>(null);
+  const [signals, setSignals] = useState<Signal[]>([]);
   const [error, setError] = useState("");
 
   async function submit(e?: React.FormEvent) {
     e?.preventDefault();
     setError("");
     setDecision(null);
+    setSignals([]);
 
     if (!prompt.trim()) {
       setError("Please enter a prompt to test.");
@@ -33,6 +41,7 @@ export default function TesterPage() {
 
       const data = await res.json();
       setDecision(data.decision);
+      setSignals(data.signals || []);
     } catch (err) {
       console.error(err);
       setError("Request failed. Check backend or network.");
@@ -72,6 +81,7 @@ export default function TesterPage() {
               onClick={() => {
                 setPrompt("");
                 setDecision(null);
+                setSignals([]);
                 setError("");
               }}
               className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/90"
@@ -90,12 +100,28 @@ export default function TesterPage() {
                   : "bg-rose-900/40"
               }`}
             >
-              <div className="font-semibold">
+              <div className="font-semibold mb-1">
                 {decision === "ALLOW" ? "Allowed" : "Blocked"}
               </div>
-              <div className="text-sm text-[#e4d4ff] mt-1">
-                Decision by structural policy
-              </div>
+
+              {signals.length > 0 ? (
+                <div className="space-y-2 text-sm text-[#e4d4ff]">
+                  {signals.map((signal, idx) => (
+                    <div
+                      key={idx}
+                      className="border border-white/10 rounded p-2"
+                    >
+                      <div><b>Type:</b> {signal.type}</div>
+                      <div><b>Confidence:</b> {signal.confidence}</div>
+                      <div><b>Reason:</b> {signal.message}</div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-sm text-[#e4d4ff]">
+                  No risk signals detected.
+                </div>
+              )}
             </div>
           )}
         </form>

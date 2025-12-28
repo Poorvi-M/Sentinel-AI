@@ -1,3 +1,5 @@
+import { Signal } from "src/gateway/signal";
+
 export type StructuralSignal = {
     type: "STRUCTURAL_MANIPULATION";
     confidence: number;
@@ -14,7 +16,7 @@ const SUSPICIOUS_PATTERNS = [
     "bypass",
 ];
 
-export function structuralFilter(prompt:string): StructuralSignal | null {
+export function structuralFilter(prompt:string): Signal | null {
     const normalized = prompt.toLowerCase();
 
     for(const pattern of SUSPICIOUS_PATTERNS){
@@ -22,6 +24,7 @@ export function structuralFilter(prompt:string): StructuralSignal | null {
             return{
                 type: "STRUCTURAL_MANIPULATION",
                 confidence : 0.9,
+                message: "Prompt attempts to override system instructions"
             };
         }
     }
