@@ -13,6 +13,7 @@ export default function TesterPage() {
   const [loading, setLoading] = useState(false);
   const [decision, setDecision] = useState<"ALLOW" | "BLOCK" | null>(null);
   const [signals, setSignals] = useState<Signal[]>([]);
+  const [riskScore, setRiskScore] = useState<number | null>(null);
   const [error, setError] = useState("");
 
   async function submit(e?: React.FormEvent) {
@@ -20,6 +21,7 @@ export default function TesterPage() {
     setError("");
     setDecision(null);
     setSignals([]);
+    setRiskScore(null);
 
     if (!prompt.trim()) {
       setError("Please enter a prompt to test.");
@@ -42,6 +44,7 @@ export default function TesterPage() {
       const data = await res.json();
       setDecision(data.decision);
       setSignals(data.signals || []);
+      setRiskScore(data.riskScore);
     } catch (err) {
       console.error(err);
       setError("Request failed. Check backend or network.");
@@ -82,6 +85,7 @@ export default function TesterPage() {
                 setPrompt("");
                 setDecision(null);
                 setSignals([]);
+                setRiskScore(null);
                 setError("");
               }}
               className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/90"
@@ -100,6 +104,30 @@ export default function TesterPage() {
                   : "bg-rose-900/40"
               }`}
             >
+              {riskScore !== null && (
+                <div className="mb-2 flex items-center gap-3">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      riskScore >= 70
+                        ? "bg-rose-500/20 text-rose-300"
+                        : riskScore >= 31
+                        ? "bg-yellow-500/20 text-yellow-300"
+                        : "bg-emerald-500/20 text-emerald-300"
+                    }`}
+                  >
+                    {riskScore >= 70
+                      ? "HIGH RISK"
+                      : riskScore >= 31
+                      ? "MEDIUM RISK"
+                      : "LOW RISK"}
+                  </span>
+
+                  <span className="text-sm text-[#e4d4ff]">
+                    Risk Score: <b>{riskScore}</b> / 100
+                  </span>
+                </div>
+              )}
+
               <div className="font-semibold mb-1">
                 {decision === "ALLOW" ? "Allowed" : "Blocked"}
               </div>
