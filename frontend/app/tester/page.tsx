@@ -14,6 +14,7 @@ export default function TesterPage() {
   const [decision, setDecision] = useState<"ALLOW" | "BLOCK" | null>(null);
   const [signals, setSignals] = useState<Signal[]>([]);
   const [riskScore, setRiskScore] = useState<number | null>(null);
+  const [requestId, setRequestId] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   async function submit(e?: React.FormEvent) {
@@ -22,6 +23,7 @@ export default function TesterPage() {
     setDecision(null);
     setSignals([]);
     setRiskScore(null);
+    setRequestId(null);
 
     if (!prompt.trim()) {
       setError("Please enter a prompt to test.");
@@ -45,6 +47,7 @@ export default function TesterPage() {
       setDecision(data.decision);
       setSignals(data.signals || []);
       setRiskScore(data.riskScore);
+      setRequestId(data.requestId);
     } catch (err) {
       console.error(err);
       setError("Request failed. Check backend or network.");
@@ -86,6 +89,7 @@ export default function TesterPage() {
                 setDecision(null);
                 setSignals([]);
                 setRiskScore(null);
+                setRequestId(null);
                 setError("");
               }}
               className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/90"
@@ -104,6 +108,7 @@ export default function TesterPage() {
                   : "bg-rose-900/40"
               }`}
             >
+              {/* Risk badge */}
               {riskScore !== null && (
                 <div className="mb-2 flex items-center gap-3">
                   <span
@@ -128,9 +133,19 @@ export default function TesterPage() {
                 </div>
               )}
 
-              <div className="font-semibold mb-1">
+              <div className="font-semibold">
                 {decision === "ALLOW" ? "Allowed" : "Blocked"}
               </div>
+
+              {/* Request ID (moved + visible) */}
+              {requestId && (
+                <div className="mt-1 mb-3 text-xs text-white/80 border-b border-white/10 pb-2">
+                  Request ID:{" "}
+                  <span className="font-mono select-all">
+                    {requestId}
+                  </span>
+                </div>
+              )}
 
               {signals.length > 0 ? (
                 <div className="space-y-2 text-sm text-[#e4d4ff]">

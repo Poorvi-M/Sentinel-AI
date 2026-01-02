@@ -2,6 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { structuralFilter } from "../filters/structural.filter";
 import { intentFilter } from "../filters/intent.filter";
 import { Signal } from "./signal";
+import { randomUUID } from "crypto";
+
 
 enum Decision {
   ALLOW = "ALLOW",
@@ -19,6 +21,8 @@ const BLOCK_THRESHOLD = 70;
 export class GatewayService {
   checkPrompt(prompt: string): {
     decision: Decision;
+    latencyMs: number;
+    requestID: string;
     riskScore: number;
     signals: Signal[];
   } {
@@ -38,10 +42,17 @@ export class GatewayService {
     const decision =
       riskScore >= BLOCK_THRESHOLD ? Decision.BLOCK : Decision.ALLOW;
 
+    const requestId = randomUUID();
+    const startTime = Date.now();
+    const latencyMs = Date.now() - startTime;
+
+
     return {
-      decision,
-      riskScore: Math.round(riskScore),
-      signals,
+        requestID: requestId,
+        decision,
+        latencyMs,
+        riskScore: Math.round(riskScore),
+        signals,
     };
   }
 }
