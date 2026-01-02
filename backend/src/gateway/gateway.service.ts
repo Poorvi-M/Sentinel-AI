@@ -3,7 +3,7 @@ import { structuralFilter } from "../filters/structural.filter";
 import { intentFilter } from "../filters/intent.filter";
 import { Signal } from "./signal";
 import { randomUUID } from "crypto";
-
+import { MetricsService } from "../metrics/metrics.service";
 
 enum Decision {
   ALLOW = "ALLOW",
@@ -19,6 +19,7 @@ const BLOCK_THRESHOLD = 70;
 
 @Injectable()
 export class GatewayService {
+  constructor(private readonly metricsService: MetricsService) {}
   checkPrompt(prompt: string): {
     decision: Decision;
     latencyMs: number;
@@ -45,6 +46,13 @@ export class GatewayService {
     const requestId = randomUUID();
     const startTime = Date.now();
     const latencyMs = Date.now() - startTime;
+
+    this.metricsService.recordDecision(
+      decision,
+      latencyMs,
+      signals
+    );
+    
 
 
     return {
