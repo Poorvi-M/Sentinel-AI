@@ -282,7 +282,7 @@ Response:
     }
   ]
 }
-
+---
 ### 🏁 Final Note
 
 - Sentinel AI v1.1 is officially complete.
@@ -292,6 +292,10 @@ Response:
 - **Built with intent.**
 - **Shipped with discipline.**
 - **Designed to protect.**
+---
+### Collaborators
+- Frontend - **Poorvi-M**
+- Backend - **Ishitbarman**
 
 
 
