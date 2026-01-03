@@ -7,7 +7,7 @@ export class GatewayController{
     constructor(private readonly gatewayService: GatewayService){}
 
     @Post("check")
-    checkPrompt(@Body("prompt") prompt: string):{ requestID: string;decision: "ALLOW" | "BLOCK"; riskScore: number; signals: Signal[] }{
+    checkPrompt(@Body("prompt") prompt: string):{ requestId: string;decision: "ALLOW" | "BLOCK"; riskScore: number; signals: Signal[] }{
         const decision = this.gatewayService.checkPrompt(prompt);
 
         return this.gatewayService.checkPrompt(prompt);

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import AppLayout from "@/components/applayout";
 
-
 type Signal = {
   type: string;
   confidence: number;
@@ -60,119 +59,125 @@ export default function TesterPage() {
 
   return (
     <AppLayout active="tester">
-      <div className="px-8 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <h1 className="section-title">Prompt tester</h1>
-          <p className="text-sm text-[#dbc7ff] mb-4">
-            Submit a prompt and the gateway will indicate whether it would be allowed or blocked.
-          </p>
-  
-          <form onSubmit={submit} className="glass p-4 space-y-3">
-            <textarea
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              rows={6}
-              placeholder="Enter a prompt to test..."
-              className="w-full bg-transparent text-white placeholder:text-slate-300 outline-none p-2"
-            />
-  
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                disabled={loading}
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 px-4 py-2 text-sm font-semibold text-white shadow disabled:opacity-50"
-              >
-                {loading ? "Checking…" : "Check prompt"}
-              </button>
-  
-              <button
-                type="button"
-                onClick={() => {
-                  setPrompt("");
-                  setDecision(null);
-                  setSignals([]);
-                  setRiskScore(null);
-                  setRequestId(null);
-                  setError("");
-                }}
-                className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/90"
-              >
-                Clear
-              </button>
-            </div>
-  
-            {error && <div className="text-rose-300 text-sm">{error}</div>}
-  
-            {decision && (
-              <div
-                className={`p-3 rounded-md ${
-                  decision === "ALLOW"
-                    ? "bg-emerald-900/40"
-                    : "bg-rose-900/40"
-                }`}
-              >
-                {/* Risk badge */}
-                {riskScore !== null && (
-                  <div className="mb-2 flex items-center gap-3">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        riskScore >= 70
-                          ? "bg-rose-500/20 text-rose-300"
-                          : riskScore >= 31
-                          ? "bg-yellow-500/20 text-yellow-300"
-                          : "bg-emerald-500/20 text-emerald-300"
-                      }`}
-                    >
-                      {riskScore >= 70
-                        ? "HIGH RISK"
-                        : riskScore >= 31
-                        ? "MEDIUM RISK"
-                        : "LOW RISK"}
-                    </span>
-  
-                    <span className="text-sm text-[#e4d4ff]">
-                      Risk Score: <b>{riskScore}</b> / 100
-                    </span>
-                  </div>
-                )}
-  
-                <div className="font-semibold">
-                  {decision === "ALLOW" ? "Allowed" : "Blocked"}
-                </div>
-  
-                {/* Request ID */}
-                {requestId && (
-                  <div className="mt-1 mb-3 text-xs text-white/80 border-b border-white/10 pb-2">
-                    Request ID:{" "}
-                    <span className="font-mono select-all">
-                      {requestId}
-                    </span>
-                  </div>
-                )}
-  
-                {signals.length > 0 ? (
-                  <div className="space-y-2 text-sm text-[#e4d4ff]">
-                    {signals.map((signal, idx) => (
-                      <div
-                        key={idx}
-                        className="border border-white/10 rounded p-2"
-                      >
-                        <div><b>Type:</b> {signal.type}</div>
-                        <div><b>Confidence:</b> {signal.confidence}</div>
-                        <div><b>Reason:</b> {signal.message}</div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-sm text-[#e4d4ff]">
-                    No risk signals detected.
-                  </div>
-                )}
+      <div className="px-8 py-14">
+        <div className="max-w-4xl mx-auto">
+
+          {/* OUTER BUBBLE */}
+          <div className="glass rounded-3xl p-8 border border-white/10 shadow-[0_0_40px_rgba(168,85,247,0.18)]">
+
+            <h1 className="text-2xl font-bold mb-2">Prompt tester</h1>
+            <p className="text-sm text-[#dbc7ff] mb-6">
+              Submit a prompt and the gateway will indicate whether it would be allowed or blocked.
+            </p>
+
+            <form onSubmit={submit} className="space-y-4">
+
+              {/* TEXTAREA BUBBLE */}
+              <div className="glass rounded-xl border border-white/10 p-3">
+                <textarea
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  rows={6}
+                  placeholder="Enter a prompt to test..."
+                  className="w-full bg-transparent text-white placeholder:text-slate-300 outline-none resize-none"
+                />
               </div>
-            )}
-          </form>
+
+              <div className="flex gap-3">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 px-5 py-2 text-sm font-semibold text-white shadow disabled:opacity-50"
+                >
+                  {loading ? "Checking…" : "Check prompt"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPrompt("");
+                    setDecision(null);
+                    setSignals([]);
+                    setRiskScore(null);
+                    setRequestId(null);
+                    setError("");
+                  }}
+                  className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/90"
+                >
+                  Clear
+                </button>
+              </div>
+
+              {error && <div className="text-rose-300 text-sm">{error}</div>}
+
+              {decision && (
+                <div
+                  className={`mt-4 p-4 rounded-xl border border-white/10 ${
+                    decision === "ALLOW"
+                      ? "bg-emerald-900/40"
+                      : "bg-rose-900/40"
+                  }`}
+                >
+                  {/* Risk badge */}
+                  {riskScore !== null && (
+                    <div className="mb-2 flex items-center gap-3">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          riskScore >= 70
+                            ? "bg-rose-500/20 text-rose-300"
+                            : riskScore >= 31
+                            ? "bg-yellow-500/20 text-yellow-300"
+                            : "bg-emerald-500/20 text-emerald-300"
+                        }`}
+                      >
+                        {riskScore >= 70
+                          ? "HIGH RISK"
+                          : riskScore >= 31
+                          ? "MEDIUM RISK"
+                          : "LOW RISK"}
+                      </span>
+
+                      <span className="text-sm text-[#e4d4ff]">
+                        Risk Score: <b>{riskScore}</b> / 100
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="font-semibold mb-2">
+                    {decision === "ALLOW" ? "Allowed" : "Blocked"}
+                  </div>
+
+                  {requestId && (
+                    <div className="mb-3 text-xs text-white/70 border-b border-white/10 pb-2">
+                      Request ID:{" "}
+                      <span className="font-mono select-all">{requestId}</span>
+                    </div>
+                  )}
+
+                  {signals.length > 0 ? (
+                    <div className="space-y-2 text-sm text-[#e4d4ff]">
+                      {signals.map((signal, idx) => (
+                        <div
+                          key={idx}
+                          className="border border-white/10 rounded-lg p-2"
+                        >
+                          <div><b>Type:</b> {signal.type}</div>
+                          <div><b>Confidence:</b> {signal.confidence}</div>
+                          <div><b>Reason:</b> {signal.message}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-sm text-[#e4d4ff]">
+                      No risk signals detected.
+                    </div>
+                  )}
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       </div>
     </AppLayout>
-  );  
+  );
 }

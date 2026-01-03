@@ -5,8 +5,8 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#2b0036] via-[#12001a] to-black text-white">
 
-      {/* NAVBAR (UNCHANGED) */}
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-white/10">
+      {/* NAVBAR */}
+      <nav className="flex items-center justify-between px-8 py-5 border-b border-white/10 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-gradient-to-r from-pink-500 to-violet-500" />
           <div>
@@ -49,11 +49,11 @@ export default async function Home() {
             System Architecture
           </h2>
 
-          <div className="glass rounded-xl p-6">
+          <div className="glass rounded-2xl p-6 border border-white/10">
             <img
               src="/Architecture.jpeg"
               alt="Sentinel AI Architecture Diagram"
-              className="w-full rounded-lg"
+              className="w-full rounded-xl"
             />
           </div>
 
@@ -63,40 +63,42 @@ export default async function Home() {
           </p>
         </section>
 
-        {/* WHY SENTINEL */}
+        {/* WHY SENTINEL – BUBBLE */}
         <section>
-          <h2 className="text-2xl font-semibold mb-4">
-            Why Sentinel AI?
-          </h2>
+          <div className="glass rounded-3xl p-8 max-w-4xl border border-white/10 shadow-[0_0_40px_rgba(168,85,247,0.18)]">
+            <h2 className="text-2xl font-bold mb-5">
+              Why Sentinel AI?
+            </h2>
 
-          <ul className="space-y-3 text-white/70 list-disc list-inside max-w-4xl">
-            <li>Prevents prompt injection, jailbreaks, and malicious intent</li>
-            <li>Zero changes required to existing LLM providers</li>
-            <li>Explainable decisions with signals and confidence scores</li>
-            <li>Built for real-time enforcement, not post-incident analysis</li>
-            <li>Designed as a gateway, not a model-side patch</li>
-          </ul>
+            <ul className="space-y-3 text-white/80 text-sm leading-relaxed">
+              <li>• Prevents prompt injection, jailbreaks, and malicious intent</li>
+              <li>• Zero changes required to existing LLM providers</li>
+              <li>• Explainable decisions with signals and confidence scores</li>
+              <li>• Built for real-time enforcement, not post-incident analysis</li>
+              <li>• Designed as a gateway, not a model-side patch</li>
+            </ul>
+          </div>
         </section>
 
         {/* ROADMAP */}
         <section>
-          <h2 className="text-2xl font-semibold mb-4">
+          <h2 className="text-2xl font-semibold mb-6">
             Future Roadmap
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white/70">
-            <div className="glass p-5 rounded-xl">
-              <h3 className="font-semibold mb-2">Persistence & Scale</h3>
-              <ul className="list-disc list-inside space-y-1 text-sm">
+            <div className="glass p-6 rounded-2xl border border-white/10">
+              <h3 className="font-semibold mb-3">Persistence & Scale</h3>
+              <ul className="list-disc list-inside space-y-2 text-sm">
                 <li>MongoDB for prompt & incident storage</li>
                 <li>Redis for low-latency signal caching</li>
                 <li>Multi-tenant support</li>
               </ul>
             </div>
 
-            <div className="glass p-5 rounded-xl">
-              <h3 className="font-semibold mb-2">Advanced Intelligence</h3>
-              <ul className="list-disc list-inside space-y-1 text-sm">
+            <div className="glass p-6 rounded-2xl border border-white/10">
+              <h3 className="font-semibold mb-3">Advanced Intelligence</h3>
+              <ul className="list-disc list-inside space-y-2 text-sm">
                 <li>LLM-based semantic risk analysis</li>
                 <li>Adaptive policies per tenant</li>
                 <li>Human-in-the-loop review workflows</li>

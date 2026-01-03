@@ -4,6 +4,7 @@ import { intentFilter } from "../filters/intent.filter";
 import { Signal } from "./signal";
 import { randomUUID } from "crypto";
 import { MetricsService } from "../metrics/metrics.service";
+import { LogsService } from "../database/logs/logs.service";
 
 enum Decision {
   ALLOW = "ALLOW",
@@ -19,14 +20,20 @@ const BLOCK_THRESHOLD = 70;
 
 @Injectable()
 export class GatewayService {
-  constructor(private readonly metricsService: MetricsService) {}
+  constructor(
+    private readonly metricsService: MetricsService,
+    private readonly logsService: LogsService, // ✅ FIX
+  ) {}
+
   checkPrompt(prompt: string): {
     decision: Decision;
     latencyMs: number;
-    requestID: string;
+    requestId: string;
     riskScore: number;
     signals: Signal[];
   } {
+    const startTime = Date.now(); // ✅ start timing FIRST
+
     const signals: Signal[] = [];
 
     const structuralSignal = structuralFilter(prompt);
@@ -43,24 +50,28 @@ export class GatewayService {
     const decision =
       riskScore >= BLOCK_THRESHOLD ? Decision.BLOCK : Decision.ALLOW;
 
-    const requestId = randomUUID();
-    const startTime = Date.now();
     const latencyMs = Date.now() - startTime;
+    const requestId = randomUUID();
 
-    this.metricsService.recordDecision(
+    // ✅ Metrics (fast, in-memory)
+    this.metricsService.recordDecision(decision, latencyMs, signals);
+
+    // ✅ Fire-and-forget Mongo logging (DO NOT await)
+    this.logsService.savePromptLog({
+      requestId,
+      prompt,
       decision,
+      riskScore: Math.round(riskScore),
+      signals,
       latencyMs,
-      signals
-    );
-    
-
+    });
 
     return {
-        requestID: requestId,
-        decision,
-        latencyMs,
-        riskScore: Math.round(riskScore),
-        signals,
+      requestId,
+      decision,
+      latencyMs,
+      riskScore: Math.round(riskScore),
+      signals,
     };
   }
 }
