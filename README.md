@@ -46,7 +46,7 @@ Each decision includes:
 - Measures gateway overhead per request
 - Designed to remain in the low-millisecond range
 
-### 🆔 Request Traceability
+### Request Traceability
 - Every request is assigned a unique Request ID
 - Enables debugging, auditing, and incident analysis
 
