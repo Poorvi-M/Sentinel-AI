@@ -1,4 +1,4 @@
-# 🛡️ Sentinel AI — LLM Safety Gateway
+# Sentinel AI — LLM Safety Gateway
 
 Sentinel AI is a real-time security gateway for Large Language Models (LLMs) that inspects every prompt before it reaches the model, detects malicious or unsafe intent, and enforces safety policies without requiring any changes to the underlying LLM provider.
 
@@ -6,7 +6,7 @@ Think of Sentinel AI as a **firewall for prompts**.
 
 ---
 
-## 🚀 Overview
+## Overview
 
 As LLMs are increasingly integrated into real-world applications, they become vulnerable to:
 
@@ -19,30 +19,30 @@ Sentinel AI sits in front of your LLM, analyzes every prompt in real time, and d
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🔍 Real-Time Prompt Inspection
+### Real-Time Prompt Inspection
 - Every prompt is intercepted before reaching the LLM
 - Zero latency-heavy post-processing
 
-### 🧠 Multi-Layer Safety Analysis
+### Multi-Layer Safety Analysis
 - **Structural Filter**  
   Detects instruction overrides, prompt injection, and jailbreak patterns
 - **Intent Filter**  
   Identifies suspicious or malicious user intent
 
-### 📊 Risk Scoring Engine
+### Risk Scoring Engine
 - Weighted risk score based on detected signals
 - Configurable threshold to decide ALLOW or BLOCK
 
-### 🧾 Explainable Decisions
+### Explainable Decisions
 Each decision includes:
 - Detected signals
 - Confidence scores
 - Risk score
 - Clear reasoning
 
-### ⏱️ Latency Tracking
+### Latency Tracking
 - Measures gateway overhead per request
 - Designed to remain in the low-millisecond range
 
@@ -52,9 +52,9 @@ Each decision includes:
 
 ---
 
-## 🖥️ Dashboard & UI
+## Dashboard & UI
 
-### 🔬 Prompt Tester
+### Prompt Tester
 - Manually test prompts against Sentinel AI
 - Visual risk badges (LOW / MEDIUM / HIGH)
 - Displays:
@@ -63,7 +63,7 @@ Each decision includes:
   - Signals
   - Confidence levels
 
-### 📈 Live Safety Dashboard
+### Live Safety Dashboard
 - Real-time metrics:
   - Total prompts
   - Blocked vs allowed
@@ -72,14 +72,14 @@ Each decision includes:
 - Auto-refreshing dashboard
 - Clean dark-themed UI
 
-### 🎨 Unified UI Theme (v1.1)
+### Unified UI Theme (v1.1)
 - Glassmorphism design
 - Gradient-based dark theme
 - Consistent layout across Home, Tester, and Dashboard
 
 ---
 
-## 🧱 System Architecture
+## System Architecture
 
 High-level flow:
 
@@ -108,7 +108,7 @@ Sentinel AI is provider-agnostic and can sit in front of:
 
 ---
 
-## 🗄️ Backend Architecture
+## Backend Architecture
 
 - Framework: NestJS
 - Core modules:
@@ -125,7 +125,7 @@ Sentinel AI is provider-agnostic and can sit in front of:
 
 ---
 
-## 🖥️ Frontend Architecture
+## Frontend Architecture
 
 - Framework: Next.js (App Router)
 - Features:
@@ -140,7 +140,7 @@ Sentinel AI is provider-agnostic and can sit in front of:
 
 ---
 
-## 🧪 Example Use Cases
+## Example Use Cases
 
 - Protect LLM-powered chatbots from jailbreaks
 - Secure enterprise AI tools
@@ -150,7 +150,7 @@ Sentinel AI is provider-agnostic and can sit in front of:
 
 ---
 
-## 🧭 Why Sentinel AI?
+## Why Sentinel AI?
 
 - Prevents prompt injection and malicious intent
 - Requires zero changes to existing LLM providers
@@ -160,9 +160,9 @@ Sentinel AI is provider-agnostic and can sit in front of:
 
 ---
 
-## 📌 Project Status
+## Project Status
 
-### ✅ Version 1.0 — Core Gateway (Completed)
+### Version 1.0 — Core Gateway (Completed)
 - Prompt interception
 - Structural and intent filters
 - Risk scoring and decision engine
@@ -170,7 +170,7 @@ Sentinel AI is provider-agnostic and can sit in front of:
 - MongoDB persistence
 - Dashboard and tester UI
 
-### ✅ Version 1.1 — UI Polish (Completed)
+### Version 1.1 — UI Polish (Completed)
 - Unified dark theme
 - Glassmorphism UI
 - Improved tester and dashboard UX
@@ -190,22 +190,22 @@ Current status:
 
 ---
 
-## 🧩 Installation & Local Setup
+## Installation & Local Setup
 
-### 📥 Clone the Repository
+### Clone the Repository
 
 
 git clone https://github.com/<your-username>/sentinel-ai.git
 cd sentinel-ai
 ---
-### ⚙️ Prerequisites
+### Prerequisites
 
 - Node.js ≥ 18
 - npm or pnpm
 - Docker
 - Git
 ---
-### 🗄️ Database Setup (MongoDB)
+### Database Setup (MongoDB)
 
 - Run MongoDB using Docker
 
@@ -219,7 +219,7 @@ Verify MongoDB:
 - docker ps
 - mongosh
 ---
-### 🔧 Backend Setup (NestJS)
+### Backend Setup (NestJS)
 
 - cd backend
 - npm install
@@ -238,7 +238,7 @@ Backend runs at:
 - http://localhost:3001
 
 ---
-### 🎨 Frontend Setup (Next.js)
+### Frontend Setup (Next.js)
 
 - cd frontend
 - npm install
@@ -250,7 +250,7 @@ Frontend runs at:
 
 ---
 
-### 🧪 Testing the System
+### Testing the System
 
 - Visit /tester to test prompts
 - Visit /dashboard to view live metrics
@@ -258,7 +258,7 @@ Frontend runs at:
 
 ---
 
-### 🔌 API Usage Example
+### API Usage Example
 
 Endpoint:
 - POST /gateway/check
@@ -283,7 +283,7 @@ Response:
   ]
 }
 ---
-### 🏁 Final Note
+### Final Note
 
 - Sentinel AI v1.1 is officially complete.
 
