@@ -294,8 +294,9 @@ Response:
 - **Designed to protect.**
 ---
 ### Collaborators
-- Frontend - **Poorvi-M**
-- Backend - **Ishitbarman**
+- Frontend Development - **Poorvi-M**
+- UI/UX Design and Frontend Support - **shreya-krishnan**
+- Backend Development - **Ishitbarman**
 
 
 
